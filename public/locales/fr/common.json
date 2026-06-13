@@ -96,5 +96,12 @@
   "forum_post_button": "Publier la réponse",
   "forum_pinned": "Épinglé",
   "replies_label": "réponses",
-  "views_label": "vues"
+  "views_label": "vues",
+  "forum_new_thread": "Nouveau sujet",
+  "forum_new_thread_title_placeholder": "Titre du sujet...",
+  "forum_new_thread_content_placeholder": "Qu'avez-vous a dire ?",
+  "forum_new_thread_submit": "Publier",
+  "forum_cancel": "Annuler",
+  "forum_in": "dans",
+  "forum_reported": "Signale"
 }

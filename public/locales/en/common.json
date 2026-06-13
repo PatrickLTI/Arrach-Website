@@ -96,5 +96,12 @@
   "forum_post_button": "Post Reply",
   "forum_pinned": "Pinned",
   "replies_label": "replies",
-  "views_label": "views"
+  "views_label": "views",
+  "forum_new_thread": "New Thread",
+  "forum_new_thread_title_placeholder": "Thread title...",
+  "forum_new_thread_content_placeholder": "What's on your mind?",
+  "forum_new_thread_submit": "Post Thread",
+  "forum_cancel": "Cancel",
+  "forum_in": "in",
+  "forum_reported": "Reported"
 }
