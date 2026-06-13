@@ -1,0 +1,23 @@
+version: '3'
+services:
+  redis:
+    image: redis:6-alpine
+    restart: always
+
+  postgres:
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+
+  discourse:
+    image: discourse/discourse:latest
+    restart: always
+    depends_on:
+      - redis
+      - postgres
+    env_file: .env
+    volumes:
+      - ./data:/var/discourse/shared
+    ports:
+      - "80:80"
