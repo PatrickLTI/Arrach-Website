@@ -862,19 +862,7 @@ section h2::after {
   border-radius: 2px;
 }
 
-/* Gallery Grid */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-@media (max-width: 900px) {
-  .gallery-grid {
-    grid-template-columns: 1fr;
-  }
-}
+/* Gallery Grid — defined once below near .thumb */
 
 .thumb {
   position: relative;
@@ -1469,18 +1457,18 @@ body::before {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.6rem;
   margin-top: 2rem;
 }
 
 .thumb {
   position: relative;
   overflow: hidden;
-  border-radius: 24px;
+  border-radius: 16px;
   background: rgba(29, 18, 11, 0.94);
   border: 1px solid rgba(255, 225, 175, 0.12);
-  min-height: 220px;
+  min-height: 160px;
 }
 
 .thumb img {
@@ -1842,8 +1830,8 @@ button:active, .btn:active {
   }
 
   .gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
   }
 
   .site-header {
@@ -1884,8 +1872,8 @@ button:active, .btn:active {
   }
 
   .gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
   }
 
   .site-header nav {
