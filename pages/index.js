@@ -21,8 +21,8 @@ export default function Home() {
               <p>{t.description}</p>
 
               <div className="hero-actions">
-                <Link href="/gallery" className="hero-button">Browse the gallery</Link>
-                <Link href="/events" className="hero-button hero-button-secondary">RSVP to events</Link>
+                <Link href="/gallery" className="hero-button">{t.browse_gallery}</Link>
+                <Link href="/events" className="hero-button hero-button-secondary">{t.rsvp_events}</Link>
               </div>
 
               <SlidingGallery />
@@ -30,15 +30,15 @@ export default function Home() {
               <div className="hero-metrics">
                 <div className="metric-pill">
                   <span>40</span>
-                  <small>storytellers</small>
+                  <small>{t.metric_storytellers}</small>
                 </div>
                 <div className="metric-pill">
                   <span>5</span>
-                  <small>upcoming rituals</small>
+                  <small>{t.metric_rituals}</small>
                 </div>
                 <div className="metric-pill">
                   <span>24</span>
-                  <small>shared tales</small>
+                  <small>{t.metric_tales}</small>
                 </div>
               </div>
             </div>
@@ -47,16 +47,16 @@ export default function Home() {
 
         <section className="home-features">
           <article className="feature-card">
-            <h3>Lantern-lit atmosphere</h3>
-            <p>Rich bronze tones, gentle textures, and geometric flourishes create a mood that feels handcrafted and ceremonial.</p>
+            <h3>{t.feature1_title}</h3>
+            <p>{t.feature1_desc}</p>
           </article>
           <article className="feature-card">
-            <h3>People at the center</h3>
-            <p>Every section is designed to showcase members, gatherings, and shared stories with warmth and authenticity.</p>
+            <h3>{t.feature2_title}</h3>
+            <p>{t.feature2_desc}</p>
           </article>
           <article className="feature-card">
-            <h3>Artful gatherings</h3>
-            <p>Events and discussions are presented like chapter openings in a guild epic, with elegant detail and cinematic rhythm.</p>
+            <h3>{t.feature3_title}</h3>
+            <p>{t.feature3_desc}</p>
           </article>
         </section>
       </div>

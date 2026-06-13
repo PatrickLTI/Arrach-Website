@@ -36,13 +36,13 @@ export default function Header() {
               <div className="header-user">
                 <span className="header-username">⟐ {user.username}</span>
                 <button className="header-auth-btn header-auth-btn--ghost" onClick={handleLogout}>
-                  Sign Out
+                  {t.sign_out}
                 </button>
               </div>
             ) : (
               <div className="header-auth">
-                <Link href="/login" className="header-auth-btn header-auth-btn--ghost">Sign In</Link>
-                <Link href="/register" className="header-auth-btn header-auth-btn--primary">Join Guild</Link>
+                <Link href="/login" className="header-auth-btn header-auth-btn--ghost">{t.sign_in}</Link>
+                <Link href="/register" className="header-auth-btn header-auth-btn--primary">{t.join_guild}</Link>
               </div>
             )
           )}

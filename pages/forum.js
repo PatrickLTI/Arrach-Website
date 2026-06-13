@@ -313,7 +313,7 @@ export default function Forum() {
       id: currentThread.posts.length + 1,
       author: user.username,
       avatar: user.username[0].toUpperCase(),
-      timestamp: 'just now',
+      timestamp: t.just_now,
       content: replyText,
     }
 
@@ -331,7 +331,7 @@ export default function Forum() {
     <main>
       <Header />
       <div className="container">
-        <section className="hero">
+        <section className="hero hero-compact">
           <h1>{t.forum_title}</h1>
           <p>{t.forum_description}</p>
         </section>
@@ -362,10 +362,10 @@ export default function Forum() {
                 <h2>{categories.find((cat) => cat.id === selectedCategory)?.name}</h2>
                 {loginPrompt && (
                   <div className="forum-login-gate">
-                    <p>You need to be signed in to read and participate in threads.</p>
+                    <p>{t.forum_login_gate_msg}</p>
                     <div className="forum-login-gate-actions">
-                      <a href="/login?redirect=/forum" className="header-auth-btn header-auth-btn--primary">Sign In</a>
-                      <a href="/register?redirect=/forum" className="header-auth-btn header-auth-btn--ghost">Create Account</a>
+                      <a href="/login?redirect=/forum" className="header-auth-btn header-auth-btn--primary">{t.sign_in}</a>
+                      <a href="/register?redirect=/forum" className="header-auth-btn header-auth-btn--ghost">{t.create_account}</a>
                     </div>
                   </div>
                 )}
@@ -426,9 +426,9 @@ export default function Forum() {
                     </div>
                     <div className="forum-post-content">{post.content}</div>
                     <div className="forum-post-actions">
-                      <span className="forum-post-action">👍 Like</span>
-                      <span className="forum-post-action">💬 Reply</span>
-                      <span className="forum-post-action">⚙️ Report</span>
+                      <span className="forum-post-action">👍 {t.action_like}</span>
+                      <span className="forum-post-action">💬 {t.action_reply}</span>
+                      <span className="forum-post-action">⚙️ {t.action_report}</span>
                     </div>
                   </div>
                 </div>
@@ -439,7 +439,7 @@ export default function Forum() {
               <h4>{t.forum_reply_title}</h4>
               <textarea
                 className="forum-reply-textarea"
-                placeholder={user ? t.forum_reply_placeholder : 'Sign in to post a reply'}
+                placeholder={user ? t.forum_reply_placeholder : t.forum_reply_disabled}
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
                 disabled={!user}

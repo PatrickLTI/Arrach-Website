@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import en from '../public/locales/en/common.json'
+import fr from '../public/locales/fr/common.json'
 
 const slides = [
   { src: '/araches_themes/518316747_10172296279215355_7267452464875341550_n.jpg', event: 'Lantern Night Gathering' },
@@ -10,6 +13,8 @@ const slides = [
 
 export default function SlidingGallery() {
   const [current, setCurrent] = useState(0)
+  const { locale } = useRouter()
+  const t = locale === 'fr' ? fr : en
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -32,7 +37,7 @@ export default function SlidingGallery() {
           />
         ))}
         <div className="sliding-gallery-overlay">
-          <p className="sliding-gallery-eyebrow">From the archives</p>
+          <p className="sliding-gallery-eyebrow">{t.from_archives}</p>
           <h3 className="sliding-gallery-event">{slide.event}</h3>
         </div>
         <div className="sliding-gallery-dots">

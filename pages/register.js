@@ -3,11 +3,15 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Header from '../components/Header'
 import { useAuth } from '../contexts/AuthContext'
+import en from '../public/locales/en/common.json'
+import fr from '../public/locales/fr/common.json'
 
 export default function Register() {
   const { register } = useAuth()
   const router = useRouter()
-  const { redirect } = router.query
+  const { locale, query } = router
+  const t = locale === 'fr' ? fr : en
+  const { redirect } = query
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -19,7 +23,7 @@ export default function Register() {
     e.preventDefault()
     setError('')
     if (password !== confirm) {
-      setError('Passwords do not match')
+      setError(t.passwords_mismatch)
       return
     }
     setLoading(true)
@@ -38,14 +42,14 @@ export default function Register() {
       <Header />
       <div className="container">
         <section className="hero hero-compact">
-          <h1>Join the Guild</h1>
-          <p>Create your account to participate in the Arraches community</p>
+          <h1>{t.register_title}</h1>
+          <p>{t.register_subtitle}</p>
         </section>
         <div className="auth-wrap">
           <form className="auth-form" onSubmit={handleSubmit}>
             {error && <p className="auth-error">{error}</p>}
             <div className="auth-field">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">{t.label_username}</label>
               <input
                 id="username"
                 type="text"
@@ -59,7 +63,7 @@ export default function Register() {
               />
             </div>
             <div className="auth-field">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">{t.label_email}</label>
               <input
                 id="email"
                 type="email"
@@ -71,7 +75,7 @@ export default function Register() {
               />
             </div>
             <div className="auth-field">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">{t.label_password}</label>
               <input
                 id="password"
                 type="password"
@@ -79,12 +83,12 @@ export default function Register() {
                 onChange={e => setPassword(e.target.value)}
                 required
                 autoComplete="new-password"
-                placeholder="At least 6 characters"
+                placeholder={t.password_placeholder}
                 minLength={6}
               />
             </div>
             <div className="auth-field">
-              <label htmlFor="confirm">Confirm Password</label>
+              <label htmlFor="confirm">{t.label_confirm_password}</label>
               <input
                 id="confirm"
                 type="password"
@@ -96,12 +100,12 @@ export default function Register() {
               />
             </div>
             <button type="submit" className="auth-submit" disabled={loading}>
-              {loading ? 'Creating account…' : 'Create Account'}
+              {loading ? t.creating_account : t.create_account}
             </button>
             <p className="auth-switch">
-              Already a member?{' '}
+              {t.have_account}{' '}
               <Link href={redirect ? `/login?redirect=${redirect}` : '/login'}>
-                Sign in
+                {t.sign_in}
               </Link>
             </p>
           </form>
