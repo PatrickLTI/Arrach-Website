@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import en from '../public/locales/en/common.json'
 import fr from '../public/locales/fr/common.json'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Header() {
   const router = useRouter()
@@ -9,6 +10,12 @@ export default function Header() {
   const t = locale === 'fr' ? fr : en
   const other = locale === 'fr' ? 'en' : 'fr'
   const isActive = (path) => pathname === path
+  const { user, logout, loading } = useAuth()
+
+  const handleLogout = () => {
+    logout()
+    router.push('/')
+  }
 
   return (
     <header className="site-header">
@@ -23,7 +30,22 @@ export default function Header() {
           </nav>
         </div>
 
-        <div className="lang-switch">
+        <div className="header-right">
+          {!loading && (
+            user ? (
+              <div className="header-user">
+                <span className="header-username">⟐ {user.username}</span>
+                <button className="header-auth-btn header-auth-btn--ghost" onClick={handleLogout}>
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <div className="header-auth">
+                <Link href="/login" className="header-auth-btn header-auth-btn--ghost">Sign In</Link>
+                <Link href="/register" className="header-auth-btn header-auth-btn--primary">Join Guild</Link>
+              </div>
+            )
+          )}
           <Link href={{ pathname, query }} locale={other} className="lang-btn">
             {other.toUpperCase()}
           </Link>

@@ -1,8 +1,9 @@
-﻿import Header from '../components/Header'
+import Header from '../components/Header'
 import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import en from '../public/locales/en/common.json'
 import fr from '../public/locales/fr/common.json'
+import { useAuth } from '../contexts/AuthContext'
 
 const forumData = {
   en: [
@@ -136,127 +137,127 @@ const forumData = {
   fr: [
     {
       id: 1,
-      title: 'Bienvenue sur le forum de la Guilde !',
-      author: 'MaîtreGuild',
-      category: 'general',
-      date: 'il y a 2 jours',
+      title: "Bienvenue sur le forum de la Guilde !",
+      author: "MaitreGuild",
+      category: "general",
+      date: "il y a 2 jours",
       replies: 12,
       views: 156,
-      badge: 'Épinglé',
+      badge: "Epingle",
       posts: [
         {
           id: 1,
-          author: 'MaîtreGuild',
-          avatar: 'M',
-          timestamp: 'il y a 2 jours',
-          content: 'Bienvenue dans notre communauté ! C’est le forum officiel de la Guilde d’Arraches. N’hésitez pas à vous présenter, partager des idées et discuter.',
+          author: "MaitreGuild",
+          avatar: "M",
+          timestamp: "il y a 2 jours",
+          content: "Bienvenue dans notre communaute ! C'est le forum officiel de la Guilde d'Arraches. N'hesitez pas a vous presenter, partager des idees et discuter.",
         },
         {
           id: 2,
-          author: 'IngénieurVapeur',
-          avatar: 'I',
-          timestamp: 'il y a 1 jour',
-          content: 'Merci d’avoir mis cela en place ! Je suis ravi d’être ici.',
+          author: "IngenieurVapeur",
+          avatar: "I",
+          timestamp: "il y a 1 jour",
+          content: "Merci d'avoir mis cela en place ! Je suis ravi d'etre ici.",
         },
         {
           id: 3,
-          author: 'ScribeArcane',
-          avatar: 'S',
-          timestamp: 'il y a 1 jour',
-          content: 'C’est super d’avoir un lieu central pour communiquer.',
+          author: "ScribeArcane",
+          avatar: "S",
+          timestamp: "il y a 1 jour",
+          content: "C'est super d'avoir un lieu central pour communiquer.",
         },
       ],
     },
     {
       id: 2,
-      title: 'Prochain rassemblement de la guilde - 15 juin',
-      author: 'Organisateur',
-      category: 'events',
-      date: 'il y a 1 jour',
+      title: "Prochain rassemblement de la guilde - 15 juin",
+      author: "Organisateur",
+      category: "events",
+      date: "il y a 1 jour",
       replies: 8,
       views: 89,
       posts: [
         {
           id: 1,
-          author: 'Organisateur',
-          avatar: 'O',
-          timestamp: 'il y a 1 jour',
-          content: 'Nous préparons notre rassemblement mensuel ! Qui est intéressé ? Nous nous retrouverons au lieu habituel.',
+          author: "Organisateur",
+          avatar: "O",
+          timestamp: "il y a 1 jour",
+          content: "Nous preparons notre rassemblement mensuel ! Qui est interesse ? Nous nous retrouverons au lieu habituel.",
         },
         {
           id: 2,
-          author: 'MaîtreRouage',
-          avatar: 'M',
-          timestamp: 'il y a 22 heures',
-          content: 'Je suis partant ! Dois-je apporter quelque chose ?',
+          author: "MaitreRouage",
+          avatar: "M",
+          timestamp: "il y a 22 heures",
+          content: "Je suis partant ! Dois-je apporter quelque chose ?",
         },
         {
           id: 3,
-          author: 'VoyageurVortex',
-          avatar: 'V',
-          timestamp: 'il y a 18 heures',
-          content: 'Je serai là. J’ai hâte !',
+          author: "VoyageurVortex",
+          avatar: "V",
+          timestamp: "il y a 18 heures",
+          content: "Je serai la. J'ai hate !",
         },
       ],
     },
     {
       id: 3,
-      title: 'Meilleures idées de mode steampunk',
-      author: 'Styliste',
-      category: 'general',
-      date: 'il y a 3 heures',
+      title: "Meilleures idees de mode steampunk",
+      author: "Styliste",
+      category: "general",
+      date: "il y a 3 heures",
       replies: 24,
       views: 312,
       posts: [
         {
           id: 1,
-          author: 'Styliste',
-          avatar: 'S',
-          timestamp: 'il y a 3 heures',
-          content: 'Partageons nos idées de tenues steampunk préférées ! Je viens d’obtenir des lunettes en laiton incroyables.',
+          author: "Styliste",
+          avatar: "S",
+          timestamp: "il y a 3 heures",
+          content: "Partageons nos idees de tenues steampunk preferees ! Je viens d'obtenir des lunettes en laiton incroyables.",
         },
         {
           id: 2,
-          author: 'CollectionneurVintage',
-          avatar: 'C',
-          timestamp: 'il y a 2 heures',
-          content: 'J’adore ce fil ! Voici mes dernières trouvailles...',
+          author: "CollectionneurVintage",
+          avatar: "C",
+          timestamp: "il y a 2 heures",
+          content: "J'adore ce fil ! Voici mes dernieres trouvailles...",
         },
       ],
     },
     {
       id: 4,
-      title: 'Atelier : Fabrication avancée de rouages',
-      author: 'MaîtreArtisan',
-      category: 'tutorials',
-      date: 'Hier',
+      title: "Atelier : Fabrication avancee de rouages",
+      author: "MaitreArtisan",
+      category: "tutorials",
+      date: "Hier",
       replies: 15,
       views: 203,
       posts: [
         {
           id: 1,
-          author: 'MaîtreArtisan',
-          avatar: 'A',
-          timestamp: 'Hier',
-          content: 'J’organise un atelier sur la fabrication avancée de rouages. Apprenez des techniques des artisans expérimentés !',
+          author: "MaitreArtisan",
+          avatar: "A",
+          timestamp: "Hier",
+          content: "J'organise un atelier sur la fabrication avancee de rouages. Apprenez des techniques des artisans experimentes !",
         },
       ],
     },
     {
       id: 5,
-      title: 'Présentations des membres',
-      author: 'NouveauMembre42',
-      category: 'introductions',
-      date: 'il y a 4 heures',
+      title: "Presentations des membres",
+      author: "NouveauMembre42",
+      category: "introductions",
+      date: "il y a 4 heures",
       replies: 6,
       views: 74,
       posts: [
         {
           id: 1,
-          author: 'NouveauMembre42',
-          avatar: 'N',
-          timestamp: 'il y a 4 heures',
-          content: 'Bonjour à tous ! Je viens de rejoindre la guilde. Je suis impatient de vous rencontrer et d’en apprendre plus sur l’univers Planescape !',
+          author: "NouveauMembre42",
+          avatar: "N",
+          timestamp: "il y a 4 heures",
+          content: "Bonjour a tous ! Je viens de rejoindre la guilde. Je suis impatient de vous rencontrer et d'en apprendre plus sur l'univers Planescape !",
         },
       ],
     },
@@ -264,12 +265,14 @@ const forumData = {
 }
 
 export default function Forum() {
-  const { locale } = useRouter()
+  const router = useRouter()
+  const { locale } = router
   const t = locale === 'fr' ? fr : en
+  const { user } = useAuth()
   const [selectedThread, setSelectedThread] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState('general')
   const [replyText, setReplyText] = useState('')
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loginPrompt, setLoginPrompt] = useState(false)
   const initialThreads = useMemo(
     () => JSON.parse(JSON.stringify(forumData[locale === 'fr' ? 'fr' : 'en'])),
     [locale]
@@ -294,14 +297,23 @@ export default function Forum() {
   const filteredThreads = threads.filter((thread) => !selectedCategory || thread.category === selectedCategory)
   const currentThread = selectedThread ? threads.find((thread) => thread.id === selectedThread) : null
 
+  const handleThreadClick = (threadId) => {
+    if (!user) {
+      setLoginPrompt(true)
+      return
+    }
+    setLoginPrompt(false)
+    setSelectedThread(threadId)
+  }
+
   const handleReply = () => {
-    if (!loggedIn || !replyText.trim() || !currentThread) return
+    if (!user || !replyText.trim() || !currentThread) return
 
     const newPost = {
       id: currentThread.posts.length + 1,
-      author: locale === 'fr' ? 'Vous' : 'You',
-      avatar: 'U',
-      timestamp: locale === 'fr' ? 'à l’instant' : 'just now',
+      author: user.username,
+      avatar: user.username[0].toUpperCase(),
+      timestamp: 'just now',
       content: replyText,
     }
 
@@ -348,9 +360,22 @@ export default function Forum() {
 
               <div>
                 <h2>{categories.find((cat) => cat.id === selectedCategory)?.name}</h2>
+                {loginPrompt && (
+                  <div className="forum-login-gate">
+                    <p>You need to be signed in to read and participate in threads.</p>
+                    <div className="forum-login-gate-actions">
+                      <a href="/login?redirect=/forum" className="header-auth-btn header-auth-btn--primary">Sign In</a>
+                      <a href="/register?redirect=/forum" className="header-auth-btn header-auth-btn--ghost">Create Account</a>
+                    </div>
+                  </div>
+                )}
                 <div className="forum-thread-list">
                   {filteredThreads.map((thread) => (
-                    <div key={thread.id} className="forum-thread" onClick={() => setSelectedThread(thread.id)}>
+                    <div
+                      key={thread.id}
+                      className={`forum-thread${!user ? ' forum-thread--locked' : ''}`}
+                      onClick={() => handleThreadClick(thread.id)}
+                    >
                       <div className="forum-thread-info">
                         {thread.badge && <span className="forum-badge">{thread.badge}</span>}
                         <div className="forum-thread-title">{thread.title}</div>
@@ -384,7 +409,7 @@ export default function Forum() {
             </button>
             <h2>{currentThread.title}</h2>
             <div style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
-              {t.forum_started_by} <strong>{currentThread.author}</strong> {locale === 'fr' ? 'dans' : 'in'} {categories.find((cat) => cat.id === currentThread.category)?.name} • {currentThread.date}
+              {t.forum_started_by} <strong>{currentThread.author}</strong> in {categories.find((cat) => cat.id === currentThread.category)?.name} • {currentThread.date}
             </div>
 
             <div style={{ marginBottom: '3rem' }}>
@@ -401,32 +426,27 @@ export default function Forum() {
                     </div>
                     <div className="forum-post-content">{post.content}</div>
                     <div className="forum-post-actions">
-                      <span className="forum-post-action">👍 {locale === 'fr' ? 'J’aime' : 'Like'}</span>
-                      <span className="forum-post-action">💬 {locale === 'fr' ? 'Répondre' : 'Reply'}</span>
-                      <span className="forum-post-action">⚙️ {locale === 'fr' ? 'Signaler' : 'Report'}</span>
+                      <span className="forum-post-action">👍 Like</span>
+                      <span className="forum-post-action">💬 Reply</span>
+                      <span className="forum-post-action">⚙️ Report</span>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="forum-login-banner">
-              <p>{loggedIn ? t.forum_logged_in_message : t.forum_login_prompt}</p>
-              <button onClick={() => setLoggedIn((prev) => !prev)} className="login-toggle-btn">
-                {loggedIn ? t.logout_button : t.login_button}
-              </button>
-            </div>
-
             <div className="forum-reply-form">
               <h4>{t.forum_reply_title}</h4>
               <textarea
                 className="forum-reply-textarea"
-                placeholder={t.forum_reply_placeholder}
+                placeholder={user ? t.forum_reply_placeholder : 'Sign in to post a reply'}
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
-                disabled={!loggedIn}
+                disabled={!user}
               />
-              <button onClick={handleReply} disabled={!loggedIn}>{loggedIn ? t.forum_post_button : t.login_button}</button>
+              <button onClick={handleReply} disabled={!user || !replyText.trim()}>
+                {t.forum_post_button}
+              </button>
             </div>
           </section>
         )}
