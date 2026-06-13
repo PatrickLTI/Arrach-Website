@@ -323,7 +323,7 @@ export default function Forum() {
   return (
     <main>
       <Header />
-      <div className="forum-page-wrapper">
+      <div className="container">
         <section className="hero hero-compact">
           <h1>{t.forum_title}</h1>
           <p>{t.forum_description}</p>
