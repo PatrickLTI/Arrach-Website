@@ -50,7 +50,7 @@ export default function Events() {
     <main>
       <Header />
       <div className="container">
-        <section className="hero">
+        <section className="hero hero-compact">
           <h1>{t.events_title || 'Events'}</h1>
           <p>{t.events_hint || 'Join us for extraordinary gatherings'}</p>
         </section>

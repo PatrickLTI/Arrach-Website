@@ -20,7 +20,7 @@ export default function Gallery() {
     <main>
       <Header />
       <div className="container">
-        <section className="hero">
+        <section className="hero hero-compact">
           <h1>{t.gallery || 'Gallery'}</h1>
           <p>{t.gallery_subtitle}</p>
         </section>
