@@ -202,10 +202,6 @@ main {
   width: 100%;
 }
 
-.site-nav a:hover {
-  color: var(--accent-secondary);
-}
-
 .lang-switch {
   display: flex;
   align-items: center;
@@ -843,34 +839,6 @@ section {
 
 section h2 {
   position: relative;
-}
-
-section h2::before,
-section h2::after {
-  content: '⟣';
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  color: rgba(224, 182, 124, 0.45);
-  font-size: 1.3rem;
-}
-
-section h2::before {
-  left: -2rem;
-}
-
-section h2::after {
-  right: -2rem;
-}
-
-@media (max-width: 1024px) {
-  .hero-features {
-    grid-template-columns: 1fr;
-  }
-}
-
-section h2 {
-  position: relative;
   padding-bottom: 1rem;
   margin-bottom: 2rem;
 }
@@ -884,6 +852,12 @@ section h2::after {
   height: 3px;
   background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
   border-radius: 2px;
+}
+
+@media (max-width: 1024px) {
+  .hero-features {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Gallery Grid — defined once below near .thumb */
@@ -1470,6 +1444,19 @@ body::before {
 
 .feature-card p {
   color: var(--text-secondary);
+}
+
+.home-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 900px) {
+  .home-features {
+    grid-template-columns: 1fr;
+  }
 }
 
 .gallery-grid {

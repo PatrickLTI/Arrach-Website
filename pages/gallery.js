@@ -32,13 +32,13 @@ export default function Gallery() {
       <Header />
       <div className="container">
         <section className="hero hero-compact">
-          <h1>{t.gallery || 'Gallery'}</h1>
+          <h1>{t.gallery}</h1>
           <p>{t.gallery_subtitle}</p>
         </section>
 
         <section>
           <h2>{t.gallery_section_title}</h2>
-          <p className="hint">{t.gallery_instructions || 'A collection of themed images and member photographs'}</p>
+          <p className="hint">{t.gallery_instructions}</p>
           <div className="gallery-grid">
             {sampleImages.map((src, i) => (
               <div key={i} className="thumb">

@@ -552,7 +552,7 @@ export default function Forum() {
               <h4>{t.forum_reply_title}</h4>
               {replyingTo && (
                 <div className="forum-replying-to">
-                  Replying to <strong>@{replyingTo}</strong>
+                  {t.forum_replying_to} <strong>@{replyingTo}</strong>
                   <button className="forum-replying-to-clear" onClick={() => { setReplyingTo(null); setReplyText('') }}>✕</button>
                 </div>
               )}

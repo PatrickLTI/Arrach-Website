@@ -3,13 +3,14 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import en from '../public/locales/en/common.json'
 import fr from '../public/locales/fr/common.json'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Events() {
   const { locale } = useRouter()
   const t = locale === 'fr' ? fr : en
+  const { user } = useAuth()
   const totalGuildMembers = 40
   const [attendanceState, setAttendanceState] = useState([null, null, null])
-  const [loggedIn, setLoggedIn] = useState(false)
   const [openAttendees, setOpenAttendees] = useState(null)
 
   const upcomingEvents = [
@@ -34,14 +35,15 @@ export default function Events() {
   ]
 
   const handleAttendance = (index, value) => {
-    if (!loggedIn) return
+    if (!user) return
     setAttendanceState((prev) => prev.map((item, idx) => (idx === index ? value : item)))
   }
 
   const getAttendees = (event, index) => {
     const list = [...event.attendees]
-    if (loggedIn && attendanceState[index] === true && !list.includes(t.you_label)) {
-      list.unshift(t.you_label)
+    if (user && attendanceState[index] === true) {
+      const name = user.username
+      if (!list.includes(name)) list.unshift(name)
     }
     return list
   }
@@ -51,19 +53,12 @@ export default function Events() {
       <Header />
       <div className="container">
         <section className="hero hero-compact">
-          <h1>{t.events_title || 'Events'}</h1>
-          <p>{t.events_hint || 'Join us for extraordinary gatherings'}</p>
+          <h1>{t.events_title}</h1>
+          <p>{t.events_hint}</p>
         </section>
 
         <section>
           <h2>{t.events_upcoming_title}</h2>
-          <div className="event-login-banner">
-            <p>{loggedIn ? t.logged_in_message : t.login_prompt}</p>
-            <button onClick={() => setLoggedIn((prev) => !prev)} className="login-toggle-btn">
-              {loggedIn ? t.logout_button : t.login_button}
-            </button>
-          </div>
-
           <div className="event-grid">
             {upcomingEvents.map((event, idx) => (
               <div key={idx} className="card">
@@ -80,14 +75,14 @@ export default function Events() {
                     <button
                       className={attendanceState[idx] === true ? 'attendance-btn active' : 'attendance-btn'}
                       onClick={() => handleAttendance(idx, true)}
-                      disabled={!loggedIn}
+                      disabled={!user}
                     >
                       {t.attending_yes}
                     </button>
                     <button
                       className={attendanceState[idx] === false ? 'attendance-btn active secondary' : 'attendance-btn secondary'}
                       onClick={() => handleAttendance(idx, false)}
-                      disabled={!loggedIn}
+                      disabled={!user}
                     >
                       {t.attending_no}
                     </button>
