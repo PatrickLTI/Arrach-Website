@@ -24,3 +24,9 @@ yarn-error.log*
 # OS
 .DS_Store
 Thumbs.db
+
+# User data (contains hashed credentials)
+data/users.json
+
+# Claude memory
+.claude/

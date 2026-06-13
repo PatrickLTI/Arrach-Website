@@ -18,6 +18,7 @@ export default function Header() {
   }
 
   return (
+    <>
     <header className="site-header">
       <div className="container header-inner">
         <div className="brand-nav">
@@ -52,5 +53,11 @@ export default function Header() {
         </div>
       </div>
     </header>
+    <div className="site-banner" aria-hidden="true">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <img key={i} src="/araches_themes/arraches_theme.png" alt="" className="site-banner-crest" />
+      ))}
+    </div>
+    </>
   )
 }
