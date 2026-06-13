@@ -224,7 +224,9 @@ export default function Forum() {
     { id: 'media', name: t.category_media, icon: '📸' },
   ]
 
-  const filteredThreads = threads.filter((thread) => !selectedCategory || thread.category === selectedCategory)
+  const filteredThreads = threads
+    .filter((thread) => !selectedCategory || thread.category === selectedCategory)
+    .sort((a, b) => (b.badge === 'Pinned' ? 1 : 0) - (a.badge === 'Pinned' ? 1 : 0))
   const totalPages = Math.ceil(filteredThreads.length / THREADS_PER_PAGE)
   const pagedThreads = filteredThreads.slice((currentPage - 1) * THREADS_PER_PAGE, currentPage * THREADS_PER_PAGE)
   const currentThread = selectedThread ? threads.find((thread) => thread.id === selectedThread) : null
