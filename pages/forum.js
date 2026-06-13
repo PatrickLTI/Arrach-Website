@@ -216,6 +216,13 @@ export default function Forum() {
     } catch {}
   }, [threads, locale])
 
+  const socialLinks = [
+    { name: 'Facebook',  url: 'https://facebook.com/',   color: '#1877F2', svg: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' },
+    { name: 'Instagram', url: 'https://instagram.com/',  color: '#E1306C', svg: 'M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M21 7.5v9a4.5 4.5 0 0 1-4.5 4.5h-9A4.5 4.5 0 0 1 3 16.5v-9A4.5 4.5 0 0 1 7.5 3h9A4.5 4.5 0 0 1 21 7.5z' },
+    { name: 'Discord',   url: 'https://discord.gg/',     color: '#5865F2', svg: 'M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.045.03.06a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z' },
+    { name: 'X / Twitter', url: 'https://x.com/',       color: '#e2e8f0', svg: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z' },
+  ]
+
   const categories = [
     { id: 'general', name: t.category_general, icon: '💬' },
     { id: 'events', name: t.category_events, icon: '📅' },
@@ -349,6 +356,25 @@ export default function Forum() {
                     </div>
                   </div>
                 ))}
+
+                <div className="forum-social">
+                  <h4 style={{ marginBottom: '0.75rem' }}>{t.forum_follow_us}</h4>
+                  {socialLinks.map(link => (
+                    <a
+                      key={link.name}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="forum-social-link"
+                      style={{ '--brand-color': link.color }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d={link.svg} />
+                      </svg>
+                      {link.name}
+                    </a>
+                  ))}
+                </div>
               </aside>
 
               <div className="forum-main">
