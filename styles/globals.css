@@ -2004,6 +2004,12 @@ button:active, .btn:active {
   font-size: 0.9rem;
   color: var(--accent-primary);
   letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.header-username:hover {
+  color: var(--accent-tertiary);
 }
 
 .header-auth-btn {
@@ -2446,4 +2452,86 @@ button:active, .btn:active {
 .forum-back-btn:hover {
   border-color: var(--accent-primary);
   color: var(--accent-primary);
+}
+
+/* ── Profile page ─────────────────────────────────────────── */
+.profile-wrap {
+  max-width: 540px;
+  margin: 0 auto 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-top: 2px solid var(--accent-primary);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+}
+
+.profile-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0c0806;
+  flex-shrink: 0;
+}
+
+.profile-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.profile-username-display {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--accent-primary);
+  letter-spacing: 0.04em;
+}
+
+.profile-joined {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.profile-form {
+  max-width: 100%;
+}
+
+.profile-name-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.profile-success {
+  background: rgba(46, 139, 122, 0.12);
+  border: 1px solid rgba(46, 139, 122, 0.38);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  color: #5fcfbe;
+  font-family: var(--font-ui);
+  font-size: 0.86rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 480px) {
+  .profile-name-row {
+    grid-template-columns: 1fr;
+  }
 }

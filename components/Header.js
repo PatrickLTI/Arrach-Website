@@ -35,7 +35,7 @@ export default function Header() {
           {!loading && (
             user ? (
               <div className="header-user">
-                <span className="header-username">⟐ {user.username}</span>
+                <Link href="/profile" className="header-username">⟐ {user.username}</Link>
                 <button className="header-auth-btn header-auth-btn--ghost" onClick={handleLogout}>
                   {t.sign_out}
                 </button>

@@ -105,5 +105,14 @@
   "forum_in": "in",
   "forum_reported": "Reported",
   "forum_follow_us": "Follow Us",
-  "forum_replying_to": "Replying to"
+  "forum_replying_to": "Replying to",
+  "profile_title": "My Profile",
+  "profile_subtitle": "Manage your guild identity",
+  "profile_save": "Save Changes",
+  "profile_saving": "Saving...",
+  "profile_saved": "Profile updated successfully",
+  "profile_error_generic": "Could not update profile",
+  "label_first_name": "First Name",
+  "label_last_name": "Last Name",
+  "member_since": "Member since"
 }

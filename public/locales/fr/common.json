@@ -105,5 +105,14 @@
   "forum_in": "dans",
   "forum_reported": "Signale",
   "forum_follow_us": "Suivez-nous",
-  "forum_replying_to": "En réponse à"
+  "forum_replying_to": "En réponse à",
+  "profile_title": "Mon Profil",
+  "profile_subtitle": "Gérez votre identité de guilde",
+  "profile_save": "Enregistrer",
+  "profile_saving": "Enregistrement...",
+  "profile_saved": "Profil mis à jour avec succès",
+  "profile_error_generic": "Impossible de mettre à jour le profil",
+  "label_first_name": "Prénom",
+  "label_last_name": "Nom de famille",
+  "member_since": "Membre depuis"
 }
