@@ -40,16 +40,20 @@ export default function SlidingGallery() {
           <p className="sliding-gallery-eyebrow">{t.from_archives}</p>
           <h3 className="sliding-gallery-event">{slide.event}</h3>
         </div>
-        <div className="sliding-gallery-dots">
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              className={`sg-dot${i === current ? ' sg-dot-active' : ''}`}
-              onClick={() => setCurrent(i)}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
-        </div>
+        <button
+          className="sg-arrow sg-arrow-left"
+          onClick={() => setCurrent(i => (i - 1 + slides.length) % slides.length)}
+          aria-label="Previous slide"
+        >
+          ‹
+        </button>
+        <button
+          className="sg-arrow sg-arrow-right"
+          onClick={() => setCurrent(i => (i + 1) % slides.length)}
+          aria-label="Next slide"
+        >
+          ›
+        </button>
       </div>
     </div>
   )

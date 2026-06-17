@@ -1,31 +1,28 @@
-import fs from 'fs'
-import path from 'path'
+import supabase from '../../../lib/supabase'
 
-const usersFile = path.join(process.cwd(), 'data', 'users.json')
-
-function getUsers() {
-  try {
-    return JSON.parse(fs.readFileSync(usersFile, 'utf-8'))
-  } catch {
-    return []
-  }
-}
-
-function saveUsers(users) {
-  fs.mkdirSync(path.dirname(usersFile), { recursive: true })
-  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2))
-}
-
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method === 'GET') {
     const { id } = req.query
     if (!id) return res.status(400).json({ error: 'User ID required' })
 
-    const user = getUsers().find(u => u.id === id)
-    if (!user) return res.status(404).json({ error: 'User not found' })
+    const { data: user, error } = await supabase
+      .from('users')
+      .select('id, username, email, first_name, last_name, created_at')
+      .eq('id', id)
+      .single()
 
-    const { passwordHash, ...safeUser } = user
-    return res.status(200).json({ user: safeUser })
+    if (error || !user) return res.status(404).json({ error: 'User not found' })
+
+    return res.status(200).json({
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        createdAt: user.created_at,
+      },
+    })
   }
 
   if (req.method === 'PUT') {
@@ -33,25 +30,42 @@ export default function handler(req, res) {
     if (!id) return res.status(400).json({ error: 'User ID required' })
     if (!email?.trim()) return res.status(400).json({ error: 'Email is required' })
 
-    const users = getUsers()
-    const idx = users.findIndex(u => u.id === id)
-    if (idx === -1) return res.status(404).json({ error: 'User not found' })
-
     const normalizedEmail = email.toLowerCase().trim()
-    const emailTaken = users.some((u, i) => i !== idx && u.email === normalizedEmail)
-    if (emailTaken) return res.status(409).json({ error: 'Email already in use' })
 
-    users[idx] = {
-      ...users[idx],
-      firstName: (firstName || '').trim(),
-      lastName: (lastName || '').trim(),
-      email: normalizedEmail,
+    const { data: emailCheck } = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', normalizedEmail)
+      .neq('id', id)
+      .limit(1)
+
+    if (emailCheck && emailCheck.length > 0) {
+      return res.status(409).json({ error: 'Email already in use' })
     }
 
-    saveUsers(users)
+    const { data: updated, error } = await supabase
+      .from('users')
+      .update({
+        first_name: (firstName || '').trim(),
+        last_name: (lastName || '').trim(),
+        email: normalizedEmail,
+      })
+      .eq('id', id)
+      .select('id, username, email, first_name, last_name, created_at')
+      .single()
 
-    const { passwordHash, ...safeUser } = users[idx]
-    return res.status(200).json({ user: safeUser })
+    if (error || !updated) return res.status(404).json({ error: 'User not found' })
+
+    return res.status(200).json({
+      user: {
+        id: updated.id,
+        username: updated.username,
+        email: updated.email,
+        firstName: updated.first_name,
+        lastName: updated.last_name,
+        createdAt: updated.created_at,
+      },
+    })
   }
 
   return res.status(405).end()

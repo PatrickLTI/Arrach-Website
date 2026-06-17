@@ -1,8 +1,5 @@
-import fs from 'fs'
-import path from 'path'
 import crypto from 'crypto'
-
-const usersFile = path.join(process.cwd(), 'data', 'users.json')
+import supabase from '../../../lib/supabase'
 
 function verifyPassword(password, stored) {
   const [salt, hash] = stored.split(':')
@@ -10,15 +7,7 @@ function verifyPassword(password, stored) {
   return check === hash
 }
 
-function getUsers() {
-  try {
-    return JSON.parse(fs.readFileSync(usersFile, 'utf-8'))
-  } catch {
-    return []
-  }
-}
-
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
   const { email, password } = req.body || {}
@@ -26,13 +15,24 @@ export default function handler(req, res) {
     return res.status(400).json({ error: 'Email and password are required' })
   }
 
-  const users = getUsers()
-  const user = users.find(u => u.email === email.toLowerCase().trim())
+  const { data: user, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', email.toLowerCase().trim())
+    .single()
 
-  if (!user || !verifyPassword(password, user.passwordHash)) {
+  if (error || !user || !verifyPassword(password, user.password_hash)) {
     return res.status(401).json({ error: 'Invalid email or password' })
   }
 
-  const { passwordHash, ...safeUser } = user
+  const safeUser = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    firstName: user.first_name,
+    lastName: user.last_name,
+    createdAt: user.created_at,
+  }
+
   return res.status(200).json({ user: safeUser })
 }

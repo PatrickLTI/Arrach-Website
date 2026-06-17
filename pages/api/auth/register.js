@@ -1,8 +1,5 @@
-import fs from 'fs'
-import path from 'path'
 import crypto from 'crypto'
-
-const usersFile = path.join(process.cwd(), 'data', 'users.json')
+import supabase from '../../../lib/supabase'
 
 function hashPassword(password) {
   const salt = crypto.randomBytes(16).toString('hex')
@@ -10,20 +7,7 @@ function hashPassword(password) {
   return `${salt}:${hash}`
 }
 
-function getUsers() {
-  try {
-    return JSON.parse(fs.readFileSync(usersFile, 'utf-8'))
-  } catch {
-    return []
-  }
-}
-
-function saveUsers(users) {
-  fs.mkdirSync(path.dirname(usersFile), { recursive: true })
-  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2))
-}
-
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
   const { username, email, password } = req.body || {}
@@ -34,25 +18,52 @@ export default function handler(req, res) {
     return res.status(400).json({ error: 'Password must be at least 6 characters' })
   }
 
-  const users = getUsers()
+  const normalizedEmail = email.toLowerCase().trim()
 
-  if (users.find(u => u.email === email.toLowerCase())) {
+  const { data: emailCheck } = await supabase
+    .from('users')
+    .select('id')
+    .eq('email', normalizedEmail)
+    .limit(1)
+
+  if (emailCheck && emailCheck.length > 0) {
     return res.status(409).json({ error: 'An account with this email already exists' })
   }
-  if (users.find(u => u.username.toLowerCase() === username.toLowerCase())) {
+
+  const { data: usernameCheck } = await supabase
+    .from('users')
+    .select('id')
+    .ilike('username', username.trim())
+    .limit(1)
+
+  if (usernameCheck && usernameCheck.length > 0) {
     return res.status(409).json({ error: 'Username already taken' })
   }
 
-  const newUser = {
-    id: Date.now().toString(),
-    username: username.trim(),
-    email: email.toLowerCase().trim(),
-    passwordHash: hashPassword(password),
-    createdAt: new Date().toISOString(),
-  }
-  users.push(newUser)
-  saveUsers(users)
+  const { data, error } = await supabase
+    .from('users')
+    .insert({
+      username: username.trim(),
+      email: normalizedEmail,
+      password_hash: hashPassword(password),
+      first_name: '',
+      last_name: '',
+    })
+    .select()
+    .single()
 
-  const { passwordHash, ...safeUser } = newUser
+  if (error) {
+    return res.status(500).json({ error: 'Could not create account' })
+  }
+
+  const safeUser = {
+    id: data.id,
+    username: data.username,
+    email: data.email,
+    firstName: data.first_name,
+    lastName: data.last_name,
+    createdAt: data.created_at,
+  }
+
   return res.status(201).json({ user: safeUser })
 }

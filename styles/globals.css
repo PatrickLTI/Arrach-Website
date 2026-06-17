@@ -1808,35 +1808,39 @@ button:active, .btn:active {
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
-.sliding-gallery-dots {
+.sg-arrow {
   position: absolute;
-  bottom: 1.5rem;
-  right: 1.75rem;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.sg-dot {
-  width: 8px;
-  height: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: none;
-  padding: 0;
-  background: rgba(255, 225, 175, 0.35);
+  border: 1px solid rgba(255, 225, 175, 0.25);
+  background: rgba(15, 8, 4, 0.55);
+  color: var(--accent-primary);
+  font-size: 1.6rem;
+  line-height: 1;
   cursor: pointer;
-  transition: background var(--transition), transform var(--transition);
-  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+  z-index: 3;
+  backdrop-filter: blur(4px);
 }
 
-.sg-dot:hover {
-  background: rgba(255, 225, 175, 0.65);
-  transform: scale(1.2);
+.sg-arrow:hover {
+  background: rgba(15, 8, 4, 0.8);
+  border-color: var(--accent-primary);
+  transform: translateY(-50%) scale(1.1);
 }
 
-.sg-dot-active {
-  background: var(--accent-primary);
-  transform: scale(1.25);
+.sg-arrow-left {
+  left: 1rem;
+}
+
+.sg-arrow-right {
+  right: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -1847,6 +1851,20 @@ button:active, .btn:active {
 
   .sliding-gallery-event {
     font-size: 1.25rem;
+  }
+
+  .sg-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+  }
+
+  .sg-arrow-left {
+    left: 0.6rem;
+  }
+
+  .sg-arrow-right {
+    right: 0.6rem;
   }
 }
 
